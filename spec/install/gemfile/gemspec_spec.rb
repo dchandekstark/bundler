@@ -293,7 +293,7 @@ RSpec.describe "bundle install from an existing gemspec" do
           s.add_dependency "activesupport", ">= 1.0.1"
         end
 
-        bundle :install, forgotten_command_line_options(:deployment => true)
+        bundle :install, **forgotten_command_line_options(:deployment => true)
 
         expect(err).to include("changed")
       end
@@ -571,7 +571,7 @@ RSpec.describe "bundle install from an existing gemspec" do
     it "installs the ruby platform gemspec and skips dev deps with --without development" do
       simulate_platform "ruby"
 
-      install_gemfile! <<-G, forgotten_command_line_options(:without => "development")
+      install_gemfile! <<-G, **forgotten_command_line_options(:without => "development")
         source "#{file_uri_for(gem_repo1)}"
         gemspec :path => '#{tmp.join("foo")}', :name => 'foo'
       G

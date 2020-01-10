@@ -273,21 +273,21 @@ RSpec.describe "bundle install with gem sources" do
       end
 
       it "works" do
-        bundle "install", forgotten_command_line_options(:path => "vendor")
+        bundle "install", **forgotten_command_line_options(:path => "vendor")
         expect(the_bundle).to include_gems "rack 1.0"
       end
 
       it "allows running bundle install --system without deleting foo", :bundler => "< 3" do
-        bundle "install", forgotten_command_line_options(:path => "vendor")
-        bundle "install", forgotten_command_line_options(:system => true)
+        bundle "install", **forgotten_command_line_options(:path => "vendor")
+        bundle "install", **forgotten_command_line_options(:system => true)
         FileUtils.rm_rf(bundled_app("vendor"))
         expect(the_bundle).to include_gems "rack 1.0"
       end
 
       it "allows running bundle install --system after deleting foo", :bundler => "< 3" do
-        bundle "install", forgotten_command_line_options(:path => "vendor")
+        bundle "install", **forgotten_command_line_options(:path => "vendor")
         FileUtils.rm_rf(bundled_app("vendor"))
-        bundle "install", forgotten_command_line_options(:system => true)
+        bundle "install", **forgotten_command_line_options(:system => true)
         expect(the_bundle).to include_gems "rack 1.0"
       end
     end
@@ -549,7 +549,7 @@ RSpec.describe "bundle install with gem sources" do
     it "should display a proper message to explain the problem" do
       FileUtils.chmod(0o500, bundled_app("vendor"))
 
-      bundle :install, forgotten_command_line_options(:path => "vendor")
+      bundle :install, **forgotten_command_line_options(:path => "vendor")
       expect(err).to include(bundled_app("vendor").to_s)
       expect(err).to include("grant write permissions")
     end

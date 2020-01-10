@@ -263,7 +263,7 @@ RSpec.describe "bundle install across platforms" do
       gem "rack", "1.0.0"
     G
 
-    bundle! :install, forgotten_command_line_options(:path => "vendor/bundle")
+    bundle! :install, **forgotten_command_line_options(:path => "vendor/bundle")
 
     FileUtils.mv(vendored_gems, bundled_app("vendor/bundle", Gem.ruby_engine, "1.8"))
 

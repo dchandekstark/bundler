@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe "Bundler.with_env helpers" do
-  def bundle_exec_ruby!(code, options = {})
+  def bundle_exec_ruby!(code, **options)
     build_bundler_context options
-    bundle! "exec '#{Gem.ruby}' -e #{code}", options
+    bundle! "exec '#{Gem.ruby}' -e #{code}", **options
   end
 
   def build_bundler_context(options = {})

@@ -481,13 +481,13 @@ RSpec.describe "Bundler.setup" do
     end
 
     it "works even when the cache directory has been deleted" do
-      bundle! :install, forgotten_command_line_options(:path => "vendor/bundle")
+      bundle! :install, **forgotten_command_line_options(:path => "vendor/bundle")
       FileUtils.rm_rf vendored_gems("cache")
       expect(the_bundle).to include_gems "rack 1.0.0"
     end
 
     it "does not randomly change the path when specifying --path and the bundle directory becomes read only" do
-      bundle! :install, forgotten_command_line_options(:path => "vendor/bundle")
+      bundle! :install, **forgotten_command_line_options(:path => "vendor/bundle")
 
       with_read_only("#{bundled_app}/**/*") do
         expect(the_bundle).to include_gems "rack 1.0.0"
@@ -590,7 +590,7 @@ RSpec.describe "Bundler.setup" do
 
   describe "when excluding groups" do
     it "doesn't change the resolve if --without is used" do
-      install_gemfile <<-G, forgotten_command_line_options(:without => :rails)
+      install_gemfile <<-G, **forgotten_command_line_options(:without => :rails)
         source "#{file_uri_for(gem_repo1)}"
         gem "activesupport"
 
@@ -605,7 +605,7 @@ RSpec.describe "Bundler.setup" do
     end
 
     it "remembers --without and does not bail on bare Bundler.setup" do
-      install_gemfile <<-G, forgotten_command_line_options(:without => :rails)
+      install_gemfile <<-G, **forgotten_command_line_options(:without => :rails)
         source "#{file_uri_for(gem_repo1)}"
         gem "activesupport"
 
@@ -620,7 +620,7 @@ RSpec.describe "Bundler.setup" do
     end
 
     it "remembers --without and does not include groups passed to Bundler.setup" do
-      install_gemfile <<-G, forgotten_command_line_options(:without => :rails)
+      install_gemfile <<-G, **forgotten_command_line_options(:without => :rails)
         source "#{file_uri_for(gem_repo1)}"
         gem "activesupport"
 

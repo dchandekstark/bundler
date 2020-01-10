@@ -134,7 +134,7 @@ module Spec
     end
     bang :bundle
 
-    def forgotten_command_line_options(options)
+    def forgotten_command_line_options(**options)
       remembered = Bundler::VERSION.split(".", 2).first == "2"
       options = options.map do |k, v|
         v = '""' if v && v.to_s.empty?

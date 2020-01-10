@@ -90,7 +90,7 @@ RSpec.describe "compact index api" do
     G
     bundle! :install, :artifice => "compact_index"
 
-    bundle! :install, forgotten_command_line_options(:deployment => true, :path => "vendor/bundle").merge(:artifice => "compact_index")
+    bundle! :install, **forgotten_command_line_options(:deployment => true, :path => "vendor/bundle").merge(:artifice => "compact_index")
     expect(out).to include("Fetching gem metadata from #{source_uri}")
     expect(the_bundle).to include_gems "rack 1.0.0"
   end
@@ -143,7 +143,7 @@ RSpec.describe "compact index api" do
     G
 
     bundle "install", :artifice => "compact_index"
-    bundle! :install, forgotten_command_line_options(:deployment => true).merge(:artifice => "compact_index")
+    bundle! :install, **forgotten_command_line_options(:deployment => true).merge(:artifice => "compact_index")
 
     expect(the_bundle).to include_gems("foo 1.0")
   end
