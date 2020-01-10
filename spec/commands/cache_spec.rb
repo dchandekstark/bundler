@@ -208,7 +208,7 @@ RSpec.describe "bundle cache" do
         gem 'rack', :platforms => :ruby_19
       D
 
-      bundle "cache --all-platforms"
+      bundle! "cache --all-platforms"
       expect(bundled_app("vendor/cache/rack-1.0.0.gem")).to exist
     end
 
@@ -230,7 +230,7 @@ RSpec.describe "bundle cache" do
         end
       G
 
-      bundle! :cache, "all-platforms" => true
+      bundle! "cache --all-platforms"
       expect(bundled_app("vendor/cache/weakling-0.0.3.gem")).to exist
       expect(bundled_app("vendor/cache/uninstallable-2.0.gem")).to exist
       expect(the_bundle).to include_gem "rack 1.0"

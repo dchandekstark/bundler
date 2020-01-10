@@ -90,7 +90,7 @@ RSpec.describe "bundle install" do
       if type == :env
         ENV["BUNDLE_PATH"] = location
       elsif type == :global
-        bundle! "config set path #{location}", "no-color" => nil
+        bundle! "config set path #{location}", :"no-color" => nil
       end
     end
 

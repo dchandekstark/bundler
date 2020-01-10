@@ -58,7 +58,7 @@ RSpec.describe "bundle install" do
 
   describe "with --force", :bundler => 2 do
     it_behaves_like "an option to force redownloading gems" do
-      let(:flag) { "force" }
+      let(:flag) { :force }
     end
 
     it "shows a deprecation when single flag passed" do
@@ -74,7 +74,7 @@ RSpec.describe "bundle install" do
 
   describe "with --redownload" do
     it_behaves_like "an option to force redownloading gems" do
-      let(:flag) { "redownload" }
+      let(:flag) { :redownload }
     end
 
     it "does not show a deprecation when single flag passed" do
