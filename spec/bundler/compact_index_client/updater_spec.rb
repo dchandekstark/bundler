@@ -16,7 +16,7 @@ RSpec.describe Bundler::CompactIndexClient::Updater do
 
     let(:response) { double(:response, :body => "") }
 
-    it "MisMatchedChecksumError is raised" do
+    it "raises MisMatchedChecksumError" do
       # Twice: #update retries on failure
       expect(response).to receive(:[]).with("Content-Encoding").twice { "" }
       expect(response).to receive(:[]).with("ETag").twice { nil }
@@ -44,7 +44,7 @@ RSpec.describe Bundler::CompactIndexClient::Updater do
   context "when bundler doesn't have permissions on Dir.tmpdir" do
     let(:response) { double(:response, :body => "") }
 
-    it "Errno::EACCES is raised" do
+    it "raises Errno::EACCES" do
       allow(Dir).to receive(:mktmpdir) { raise Errno::EACCES }
 
       expect do
