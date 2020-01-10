@@ -19,11 +19,23 @@ module Rake
 end
 
 desc "Run specs"
-task :spec do
-  sh("bin/rspec")
-end
+task :spec => ["spec:sequential", "spec:parallel"]
 
 namespace :spec do
+  desc "Run parallel specs"
+  task :parallel do
+    sh("bin/parallel_rspec --test-options '--tag ~needs_chdir' spec/")
+  end
+
+  desc "Run sequential specs"
+  task :sequential do
+    sh("bin/rspec --tag needs_chdir")
+  end
+
+  task :all do
+    sh("bin/rspec")
+  end
+
   desc "Ensure spec dependencies are installed"
   task :deps do
     Spec::Rubygems.dev_setup
@@ -55,7 +67,7 @@ namespace :spec do
   end
 
   desc "Run the spec suite with the sudo tests"
-  task :sudo => %w[set_sudo spec]
+  task :sudo => %w[set_sudo spec:all]
 
   task :set_sudo do
     ENV["BUNDLER_SUDO_TESTS"] = "1"

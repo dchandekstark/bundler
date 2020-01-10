@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe "bundle install" do
-  describe "when a gem has a YAML gemspec" do
+  describe "when a gem has a YAML gemspec", :needs_chdir do
     before :each do
       build_repo2 do
         build_gem "yaml_spec", :gemspec => :yaml

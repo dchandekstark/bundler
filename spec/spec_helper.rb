@@ -105,7 +105,7 @@ RSpec.configure do |config|
     reset!
     system_gems []
 
-    Dir.chdir(bundled_app)
+    Dir.chdir(bundled_app) if example.metadata[:needs_chdir]
 
     @command_executions = []
 
@@ -120,7 +120,9 @@ RSpec.configure do |config|
       end
     end
 
-    Dir.chdir(original_wd)
+    Dir.chdir(original_wd) if example.metadata[:needs_chdir]
+
+    raise example.description if File.exist?(root.join(".bundle"))
   end
 
   config.after :suite do

@@ -388,7 +388,7 @@ RSpec.describe "bundle install with gem sources" do
       expect(err).not_to include("file://")
     end
 
-    it "fails gracefully when downloading an invalid specification from the full index" do
+    it "fails gracefully when downloading an invalid specification from the full index", :needs_chdir do
       build_repo2 do
         build_gem "ajp-rails", "0.0.0", :gemspec => false, :skip_validation => true do |s|
           bad_deps = [["ruby-ajp", ">= 0.2.0"], ["rails", ">= 0.14"]]
@@ -504,23 +504,20 @@ RSpec.describe "bundle install with gem sources" do
   end
 
   describe "when Bundler root contains regex chars" do
-    before do
+    it "doesn't blow up" do
       root_dir = tmp("foo[]bar")
 
       FileUtils.mkdir_p(root_dir)
-      Dir.chdir(root_dir)
-    end
 
-    it "doesn't blow up" do
       build_lib "foo"
       gemfile = <<-G
         gem 'foo', :path => "#{lib_path("foo-1.0")}"
       G
-      File.open("Gemfile", "w") do |file|
+      File.open("#{root_dir}/Gemfile", "w") do |file|
         file.puts gemfile
       end
 
-      bundle :install
+      bundle :install, :dir => root_dir
 
       expect(exitstatus).to eq(0) if exitstatus
     end
